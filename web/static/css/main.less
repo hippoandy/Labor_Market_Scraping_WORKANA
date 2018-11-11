@@ -1,0 +1,67 @@
+@padding-large: 20px;
+@padding-medium: 10px;
+@padding-small: 5px;
+@border-radius: 10px;
+
+@weight: 800;
+@weight-half: 400;
+
+@title-size: 30px;
+
+@mycard-bgcolor: #f8f9fa;
+@debug: red;
+@debug-border-wd: 2px;
+
+// text effect --------------------------------------------------
+.emphasis {
+    font-weight: @weight;
+    font-style: italic;
+    display: inline;
+}
+
+text.big-text{
+    font-size: @title-size;
+    font-weight: @weight-half
+}
+
+.italic {
+    font-style: italic;
+}
+
+// container style ----------------------------------------------
+body {
+    font-family: sans-serif !important;
+}
+
+.container {
+    padding: @padding-large;
+}
+
+.mycard {
+    padding: @padding-medium;
+    background: @mycard-bgcolor;
+    border-radius: @border-radius;
+    // border: @debug @debug-border-wd solid;
+}
+
+.background {
+    fill: @mycard-bgcolor;
+    pointer-events: all;
+}
+
+.map-layer {
+    fill: #fff;
+    stroke: #aaa;
+}
+  
+.effect-layer{
+    pointer-events:none;
+}
+
+#country-dist {
+    text-align: center;
+}
+
+#map {
+    text-align: center;
+}
