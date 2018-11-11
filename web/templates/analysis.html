@@ -1,4 +1,5 @@
 <div class="container">
+  <!-- section 1 general information -->
   <div class="mycard">
     <p>{{ paragraph }}</p>
     <p>See: <a href="https://www.workana.com/en/freelancers">https://www.workana.com/en/freelancers</a></p>
@@ -12,12 +13,39 @@
 
   <br />
 
+  <!-- section 2 avg. hourly rate by country -->
   <div class="mycard">
     <h5>Average Hourly Rate by Country</h5>
-    <p>The hourly rate is the dollar amount given by the job seeker. This number is the intended salary the seeker hope to receive if employed</p>
+    <p>
+      The hourly rate is the dollar amount given by the job seeker.
+      This number is the intended hourly salary the seeker hope to receive if employed.
+      The graph given shows the average hourly rate for each country.
+      <italic><bold>Click the country to see detail</bold></italic>.
+    </p>
     <hr />
-    <div id='map'></div>
+    <div id='map' class='pos-relative'>
+        <div id="map-detail" class='info-card'>
+          <h5 id='map-detail-title'></h5>
+          Average Hourly Rate:
+          <div id='map-detail-value'></div>
+          <hr class='hr-white' />
+          <div id='map-detail-vstat'></div>
+          <br />
+          <h6>Hourly Rate Distribution</h6>
+          <h6>(number of people)</h6>
+          <div id='map-detail-hbar'></div>
+        </div>
+    </div>
   </div>
+
+  <br />
+
+  <!-- section 3 -->
+  <div class="mycard">
+    <h5>Job Seeker Performance</h5>
+    <hr />
+  </div>
+
 </div>
 
 <script>
@@ -31,5 +59,6 @@ var map = latin()
   .$el( d3.select("#map") )
   .data( "{{ url_for('static', filename='map/latin-c.geo.json') }}" )
   .data_avg( metadata[ "country_avg" ] )
+  .total_avg( metadata[ "avg_hourly_r" ] )
   .render();
 </script>
