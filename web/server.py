@@ -1,9 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, jsonify, render_template, request
 
 import pandas as pd
 import numpy as np
 import json
 import sys
+import math
 
 app = Flask(__name__)
 
@@ -11,8 +12,17 @@ dataset = 'dataset/workana.csv'
 
 metadata = {}
 
+df = {}
+
+def round_up(x, divisor):
+    return int(math.ceil(x / divisor)) * divisor
+
+def round_down(x, divisor):
+    return x - (x%divisor)
+
 @app.route('/')
 def homePage():
+    global df
 
     title = "WORKANA Analysis"
     paragraph = "This is the analytic result toward the 'Freelancer' section of the website WORKANA."
@@ -65,6 +75,30 @@ def aboutPage():
     pageType = 'about'
 
     return render_template("index.html", title=title, paragraph=paragraph, pageType=pageType)
+
+@app.route( '/_country_hr_dist' )
+def countryDetail():
+    global df
+    nation_df = df[(df['country'] == request.args.get('country', '', type=str))]
+    data = {}
+    result = []
+
+    for i, r in nation_df.iterrows():
+        hr = r[ 'hourly_rate' ]
+        if( pd.isnull(hr) ):
+            if( 'N/A' not in data ): data[ 'N/A' ] = 1
+            else: data[ 'N/A' ] += 1
+        else:
+            low = int(round_down( hr, 10 ))
+            high = int(round_up( hr, 10 ))
+            k = str(low) + '-' + str(high)
+            if( k not in data ): data[ k ] = 1
+            else: data[ k ] += 1
+
+    for k in data.keys():
+        result.append( { "name": k, "val": data[ k ] } )
+
+    return jsonify( result )
 
 if __name__ == "__main__":
 	app.run(debug = True, host='0.0.0.0', port=8080, passthrough_errors=True)
