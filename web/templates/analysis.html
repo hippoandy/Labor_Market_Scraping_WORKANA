@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="mycard">
+    <p>{{ paragraph }}</p>
+    <p>See: <a href="https://www.workana.com/en/freelancers">https://www.workana.com/en/freelancers</a></p>
+    <hr />
+    <div>Total Number of Job Seeker(s): <p class="emphasis">{{ metadata[ "total_person" ] }}</p></div>
+    <div>Avg. Hourly Rate of all Seeker(s): <p class="emphasis">$ {{ metadata[ "avg_hourly_r" ] }} USD</p></div>
+    <div>Country Distributions:
+      <div id='country-dist'></div>
+    </div>
+  </div>
+
+  <br />
+
+  <div class="mycard">
+    <h5>Average Hourly Rate by Country</h5>
+    <p>The hourly rate is the dollar amount given by the job seeker. This number is the intended salary the seeker hope to receive if employed</p>
+    <hr />
+    <div id='map'></div>
+  </div>
+</div>
+
+<script>
+var metadata = JSON.parse( '{{ metadata | tojson | safe}}');
+var donut = donut()
+  .$el( d3.select("#country-dist") )
+  .data( metadata[ "country_dist" ] )
+  .render();
+
+var map = latin()
+  .$el( d3.select("#map") )
+  .data( "{{ url_for('static', filename='map/latin-c.geo.json') }}" )
+  .data_avg( metadata[ "country_avg" ] )
+  .render();
+</script>
