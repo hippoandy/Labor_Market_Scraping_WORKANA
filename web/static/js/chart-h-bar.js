@@ -1,30 +1,23 @@
-function hippo()
-{
-  alert( 'f**K' );
-}
+// reference: https://bl.ocks.org/hrecht/f84012ee860cb4da66331f18d588eee3
 
 function h_bar()
-{
-  // default settings
+{ // default settings
   var $el = d3.select("body");
   var data = [];
-
-  // define color scale
-  var color = d3.scale.category20c();
-
-  //set up svg using margin conventions - we'll need plenty of room on the left for labels
   var margin = {
     top: 0,
     right: 30,
     bottom: 0,
     left: 50
   };
+  var width = 300 - margin.left - margin.right,
+      height = 300 - margin.top - margin.bottom;
+
+  // define color scale
+  var color = d3.scale.category20c();
 
   var svg, x, y, yAxis;
   var object = {};
-
-  var width = 300 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
 
   object.render = function()
   {
@@ -51,10 +44,11 @@ function h_bar()
       .tickSize(0)
       .orient("left");
 
-      var gy = svg.append("g")
+    var gy = svg.append("g")
       .attr("class", "y axis")
       .call(yAxis)
-      .attr( 'fill', 'white' );
+      .attr( 'fill', 'white' )
+      .style( "font-size", "10px" );
   
     var bars = svg.selectAll(".bar")
       .data(data)
@@ -65,12 +59,12 @@ function h_bar()
     bars.append("rect")
       .attr("class", "bar")
       .attr("y", function (d) {
-          return y(d.name);
+        return y(d.name);
       })
       .attr("height", y.rangeBand())
       .attr("x", 0)
       .attr("width", function (d) {
-          return x(d.val);
+        return x(d.val);
       })
       .style( 'fill', function(d) { return color( d.val ); } );
   
@@ -79,15 +73,14 @@ function h_bar()
       .attr("class", "label")
       //y position of the label is halfway down the bar
       .attr("y", function (d) {
-          return y(d.name) + y.rangeBand() / 2 + 4;
+        return y(d.name) + y.rangeBand() / 2 + 4;
       })
-      //x position
+      //x position is halfway of the bar
       .attr("x", function (d) {
-          // return x(d.val) + 3;
-          return x(d.val/2);
+        return x(d.val/2) - 5;
       })
       .text(function (d) {
-          return d.val;
+        return d.val;
       })
       .attr( 'fill', 'white' );
 
@@ -99,8 +92,6 @@ function h_bar()
   {
     if (!arguments.length) return data;
     data = value;
-
-    console.log( data );
 
     //sort bars based on value
     data = data.sort(function (a, b)
@@ -114,8 +105,20 @@ function h_bar()
         return d3.ascending( a[ 0 ], -1 );
       else
         return d3.ascending( a[ 0 ], b[ 0 ] );
-    })
+    });
 
+    return object;
+  };
+
+  object.width = function(value){
+    if (!arguments.length) return width;
+    width = value - margin.left - margin.right;
+    return object;
+  };
+
+  object.height = function(value){
+    if (!arguments.length) return height;
+    height = value - margin.top - margin.bottom;
     return object;
   };
 

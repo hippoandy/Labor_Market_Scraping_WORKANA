@@ -1,43 +1,40 @@
+// reference: https://bl.ocks.org/john-guerra/43c7656821069d00dcbc
+
 function latin()
-{
-  // default settings
+{ // default settings
   var $el = d3.select("body");
   var data = {};
   var data_avg = {};
   var total_avg = 0;
-
   var width = 800,
       height = 600,
-      centered;
+      scale = 300,
+      center = [-74, -15];
 
   // define color scale
   var color = d3.scale.category20c();
-
+  // projection settings
   var projection = d3.geo.mercator()
-    .scale(300)
-    .center([-74, -15])
+    .scale( scale )
+    .center( center )
     .translate([width / 2, height / 2]);
-
   var path = d3.geo.path().projection( projection );
 
-  var svg, g;
+  var svg, g, centered, effectLayer, mapLayer, bigText;
   var object = {};
 
-  var effectLayer, mapLayer, bigText;
-
   var info_card = document.getElementById( 'map-detail' );
-
   var no_data = '<red>NO DATA!</red>';
 
   // method for render/refresh graph
   object.render = function()
   {
-      // Set svg width & height
+      // set svg width & height
       svg = $el.append('svg')
         .attr('width', width)
         .attr('height', height);
 
-      // Add background
+      // add background
       svg.append('rect')
         .attr('class', 'background')
         .attr('width', width)
@@ -45,24 +42,19 @@ function latin()
         .on('click', clicked);
 
       g = svg.append('g');
-
       effectLayer = g.append('g').classed('effect-layer', true);
-
       mapLayer = g.append('g').classed('map-layer', true);
-
       bigText = g.append('text')
         .classed('big-text', true)
         .attr('x', 0)
         .attr('y', 25);
 
-      // Load map data
+      // load map data
       d3.json( data, function(error, mapData)
       {   var features = mapData.features;
-
-          // Update color scale domain based on data
+          // update color scale domain based on data
           color.domain([0, d3.max(features, country_avg)]);
-
-          // Draw each country as a path
+          // draw each country as a path
           mapLayer.selectAll('path')
             .data(features)
             .enter().append('path')
@@ -78,29 +70,49 @@ function latin()
   };
 
   // getter and setter methods
-  object.data = function(value)
-  {
+  object.data = function(value) {
     if (!arguments.length) return data;
     data = value;
     return object;
   };
 
-  object.data_avg = function(value)
-  {
+  object.data_avg = function(value) {
     if (!arguments.length) return data;
     data_avg = value;
     return object;
   };
 
-  object.total_avg = function(value)
-  {
+  object.total_avg = function(value) {
     if (!arguments.length) return data;
     total_avg = value;
     return object;
   };
 
-  object.$el = function(value)
-  {
+  object.center = function(value) {
+    if (!arguments.length) return width;
+    center = value;
+    return object;
+  };
+
+  object.scale = function(value) {
+    if (!arguments.length) return width;
+    scale = value;
+    return object;
+  };
+
+  object.width = function(value) {
+    if (!arguments.length) return width;
+    width = value;
+    return object;
+  };
+
+  object.height = function(value) {
+    if (!arguments.length) return height;
+    height = value;
+    return object;
+  };
+
+  object.$el = function(value) {
     if (!arguments.length) return $el;
     $el = value;
     return object;

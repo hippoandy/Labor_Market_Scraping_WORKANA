@@ -94,6 +94,8 @@ function donut()
   object.data = function(value){
     if (!arguments.length) return data;
     data = value;
+
+    console.log( data );
     return object;
   };
 

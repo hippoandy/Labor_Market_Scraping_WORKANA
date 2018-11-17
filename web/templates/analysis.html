@@ -4,11 +4,20 @@
     <p>{{ paragraph }}</p>
     <p>See: <a href="https://www.workana.com/en/freelancers">https://www.workana.com/en/freelancers</a></p>
     <hr />
-    <div>Total Number of Job Seeker(s): <p class="emphasis">{{ metadata[ "total_person" ] }}</p></div>
-    <div>Avg. Hourly Rate of all Seeker(s): <p class="emphasis">$ {{ metadata[ "avg_hourly_r" ] }} USD</p></div>
-    <div>Country Distributions:
-      <div id='country-dist'></div>
-    </div>
+    <ur>
+      <div>* Total Number of Job Seeker(s):
+        <p class="emphasis">{{ metadata[ "total_person" ] }}</p>
+      </div>
+      <div>* Country Distributions:
+        <div id='country-dist'></div>
+      </div>
+      <div>* Avg. Hourly Rate of all Seeker(s) among Lating America:
+        <p class="emphasis">$ {{ metadata[ "avg_hourly_r" ] }} USD</p>
+      </div>
+      <div>* Highest Hourly Rate:
+        <p class="emphasis">$ {{ metadata[ "max_hr" ] }} USD, from {{ metadata[ "max_hr_country" ] }}</p>
+      </div>
+    </ur>
   </div>
 
   <br />
@@ -23,7 +32,7 @@
       <italic><bold>Click the country to see detail</bold></italic>.
     </p>
     <hr />
-    <div id='map' class='pos-relative'>
+    <div id='map' class='pos-relative'><!-- map canvas -->
         <div id="map-detail" class='info-card'>
           <h5 id='map-detail-title'></h5>
           Average Hourly Rate:
@@ -42,23 +51,199 @@
 
   <!-- section 3 -->
   <div class="mycard">
-    <h5>Job Seeker Performance</h5>
+    <!-- TODO: select different hourly rate interval -->
+    <h5>Skills vs. Hourly Rate</h5>
+    <p>
+      This section present the following idea that for each country,
+      what are the skills the job seekers have,
+      where the job seeker's hourly rate is higher than the global average among Latin America.
+      The text size indicate the skills that those seekers equip.
+    </p>
+    <p>Select different Hourly Rate range:</p>
+    <div class="dropdown">
+      <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="hr-range-menu-title" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Choose
+      </a>
+    
+      <div id='hr-range-menu' class="dropdown-menu" aria-labelledby="hr-range-menu-title">
+        <!-- menu item will be created dynamically, see script below -->
+      </div>
+    </div>
     <hr />
+    <div id='skills'>
+      <table width="100%" id="skills-grid"></table>
+    </div>
+  </div>
+
+  <br />
+
+  <!-- section 4 -->
+  <div class="mycard">
+    <h5>Correlation between Hourly Rate and (Project Completed/Hourly Worked)</h5>
+    <hr />
+    <div id='figure-container'>
+      <img src="/_hr_v_pc" width="500">
+      <!-- <img src="/_hr_v_hw" width="500"> -->
+    </div>
   </div>
 
 </div>
 
 <script>
-var metadata = JSON.parse( '{{ metadata | tojson | safe}}');
-var donut = donut()
-  .$el( d3.select("#country-dist") )
-  .data( metadata[ "country_dist" ] )
-  .render();
+var metadata;
 
-var map = latin()
-  .$el( d3.select("#map") )
-  .data( "{{ url_for('static', filename='map/latin-c.geo.json') }}" )
-  .data_avg( metadata[ "country_avg" ] )
-  .total_avg( metadata[ "avg_hourly_r" ] )
-  .render();
+// build the charts
+$(document).ready(function()
+{
+  // $.ajax({
+  //   method: 'GET',
+  //   async: true,
+  //   url: "/_correlation_plot"
+  // });
+
+  // parse the metadata from flask (otherwise, it's a string)
+  metadata = JSON.parse( '{{ metadata | tojson | safe }}' );
+  
+  // build the donut chart
+  donut_label()
+  // donut()
+    .$el( d3.select("#country-dist") )
+    .data( metadata[ "country_dist" ] )
+    // get parent width
+    .width( $("#country-dist").parent().width() )
+    .height( 500 )
+    .max( metadata[ "max_country" ][ 1 ] )
+    .render();
+
+  // build the map
+  latin()
+    .$el( d3.select("#map") )
+    .data( "{{ url_for('static', filename='map/latin-america.geo.json') }}" )
+    .scale( 300 )
+    .center( [-74, -15] ) // center latin america view
+    .width( 800 )
+    .height( 600 )
+    .data_avg( metadata[ "country_avg" ] )
+    .total_avg( metadata[ "avg_hourly_r" ] )
+    .render();
+});
+
+function build_pychart()
+{
+  var parent = document.getElementById( 'figure-container' );
+  var api = [ "/_hr_vs_pc", "/_hr_vs_hw" ];
+  for( var i = 0 ; i < api.length ; i++ )
+  {
+    var img = document.createElement( 'img' );
+    img.setAttribute( 'src', api[ i ] );
+    parent.appendChild( img );
+  }
+}
+
+$(document).ready(function()
+{
+  if( metadata != undefined )
+  {
+    // build the hourly rat dropdown and set the default for it
+    var parent = document.getElementById( 'hr-range-menu' );
+    for( var i = 1 ; i <= parseInt(metadata[ "max_hr_g_top" ] / metadata[ "hr_range" ]) ; i++ )
+    {
+      var high = i * metadata[ "hr_range" ];
+      var low = high - metadata[ "hr_range" ];
+      parent.appendChild( create_menu_item( String(low) + '-' + String(high) ) );
+    }
+    // append default option
+    var def = 'Above Latin America Average';
+    parent.appendChild( create_menu_item( def ) );
+
+    // set the default value
+    set_menu_title( def )
+    // build the chart based on default first
+    build_wc_section( def );
+  }
+});
+
+// create a dropdown menu item
+function create_menu_item( text )
+{
+  var a = document.createElement( 'a' );
+  a.setAttribute( 'class', 'dropdown-item' )
+  a.setAttribute( 'onclick', 'build_wc_section( "' + text + '" );set_menu_title( "' + text + '" );' )
+  a.innerHTML = text;
+
+  return a;
+}
+
+function set_menu_title( text )
+{
+  $('#hr-range-menu-title').html( text );
+}
+
+function build_wc_section( option )
+{
+  // build the word cloud
+  $(function()
+  {
+    $.getJSON( '/_country_hr_skills', { 'option': option },
+      function( data )
+      {
+        var p = document.getElementById( 'skills-grid' );
+        p.innerHTML = "";
+
+        var l = Object.keys(data[ 'r' ]);
+        var c = 0, tr;
+        for( var i = 0 ; i < l.length ; i++ )
+        { c += 1;
+          if( i == 0 )
+          {
+            tr = document.createElement( 'tr' );
+            tr.setAttribute( 'width', '100%' );
+          }
+
+          var td = document.createElement( 'td' );
+          td.setAttribute( 'id', 'grid' + String(i) );
+          td.setAttribute( 'align', 'center' );
+          td.setAttribute( 'valign', 'top' );
+          td.setAttribute( 'width', '50%' );
+          // add title
+          var h = document.createElement( 'h5' );
+          h.innerHTML = l[ i ];
+          var para = document.createElement( 'p' );
+          para.innerHTML = "Number of Seeker(s): " + data[ 'c' ][ l[ i ] ];
+          para.setAttribute( 'style', 'margin-bottom: 0px !important;' );
+          td.appendChild( h );
+          td.appendChild( document.createElement( 'hr' ) );
+          td.appendChild( para );
+          if( c % 2 == 1 ) td.setAttribute( 'style', 'border-right: #ccc 1px solid;height: 90%;' );
+          // make sure there is data available for a specific country
+          if( data[ 'c' ][ l[ i ] ] != 0 )
+            wordcloud()
+              .$el( d3.select(td) )
+              .data( data[ 'r' ][ l[ i ] ] )
+              .width( 250 )
+              .height( 200 )
+              .render();
+          else
+          { // if not seeker has hourly rate above average, append 'NO DATA!' msg
+            var div = document.createElement( 'div' );
+            div.innerHTML = '<red>NO DATA!</red>';
+            div.setAttribute( 'style', 'padding: 20px;' );
+            td.appendChild( div );
+          }
+          tr.append( td )
+          // finalize a row and create a new one
+          if( c == 2 )
+          {
+            c = 0;
+            p.appendChild( tr );
+            tr = document.createElement( 'tr' );
+            tr.setAttribute( 'width', '100%' );
+          }
+        }
+        // make sure there is nothing left behind
+        if( c % 2 == 1 ) p.appendChild( tr );
+      }
+    );
+  });
+}
 </script>
