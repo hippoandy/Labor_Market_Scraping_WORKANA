@@ -19,7 +19,7 @@ skill_class = 'skill'
 result_file = './result.csv'
 
 # csv header
-header = 'name,country,is_pro,rating,hourly_rate,completed_jobs,hours_worked,skills'
+header = 'name,country,rating,is_pro,hourly_rate,completed_jobs,hours_worked,skills'
 # the website url
 base_url = 'https://www.workana.com/en/freelancers?page='
 # a very large number
@@ -111,7 +111,9 @@ for i in range( 1, (limit + 1) ):
         # get all the skills the applicant has
         skills = []
         e = soup.find_all( skill_element, class_=skill_class )
-        for s in e: skills.append( s.text )
+        for s in e:
+            res = str(s.text).replace( ',', '' )
+            skills.append( res )
         skills = "|".join( skills )
         row += skills
 
