@@ -26,10 +26,13 @@ base_url = 'https://www.workana.com/en/freelancers?page='
 limit = 100
 # ------------------------------------------------------- parameters
 
+# self-defined functions -------------------------------------------
 def invalid_val(): return 'N/A'
+# make sure there is no special char in a value
 def clear_str( text ):
     text = str(text).replace( '\n', '' ).replace( '\r', '' ).replace( '\t', '' )
     return text
+# make sure the value is numeric, otherwise return invalid_val()
 def numeric( val, type='float' ):
     val = str(val) # make sure it is not 'NoneType'
     try:
@@ -38,7 +41,9 @@ def numeric( val, type='float' ):
         else: val = float(val)
         return str(val)
     except: return invalid_val()
+# ------------------------------------------- self-defined functions
 
+# file output
 f = open( result_file, 'w' )
 f.write( header )
 f.write( '\n' )
@@ -110,7 +115,8 @@ for i in range( 1, (limit + 1) ):
         skills = "|".join( skills )
         row += skills
 
+        # commit the result
         f.write( str(row.encode( 'utf-8' )) )
         f.write( '\n' )
-
+# safely close the file
 f.close()
