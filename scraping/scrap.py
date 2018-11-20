@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
 
-
 target_class = 'js-worker'
 
 # the website url
@@ -15,3 +14,5 @@ soup = BeautifulSoup( r.text, 'html.parser' )
 
 t = soup.find_all( 'div', class_=target_class )
 soup = BeautifulSoup( str(t[ 0 ]), 'html.parser' )
+
+print( soup.prettify() )
