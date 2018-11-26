@@ -3,8 +3,11 @@ import time
 import csv
 
 URL_target = 'https://www.workana.com/jobs'
-PATH_chrome_driver = '../chrome-driver/chromedriver'
-PATH_output = ''
+PATH_chrome_driver = './chrome-driver/chromedriver'
+PATH_output = './result.csv'
+
+# the keyword which to perform a search
+KEY_search = 'search query'
 
 ### MAC
 driver = webdriver.Chrome( PATH_chrome_driver )
@@ -15,7 +18,7 @@ def getToWorkAnaDotCom():
     time.sleep(1)
     inputBox = driver.find_element_by_id('Query')
 
-    inputBox.send_keys('search query')
+    inputBox.send_keys( KEY_search )
     
     # Using brower's css selector
     searchButton = driver.find_element_by_css_selector('#search-form > div > div.col-sm-8.col-md-9.col-full-left > button')
@@ -31,7 +34,7 @@ def getToWorkAnaDotCom():
 ### workana.com using url query
 ### Print all the hyperlinks 
 def getToWorkAnaDotComQuery():
-    driver.get('https://www.workana.com/jobs?query=query+here&publication=any&language=en')
+    # driver.get('https://www.workana.com/jobs?query=query+here&publication=any&language=en')
 
     time.sleep(2)
     listOfResults = driver.find_elements_by_css_selector('div.listing.wrapper-project.js-project ')
@@ -49,16 +52,16 @@ def getToWorkAnaDotComQuery():
         print(hrefLink)
 
 def writeToCsv():
-    csvFile = open('/Users/billyliu/Desktop/testfile.csv','w')
-    csvFile.write('Healthy' + ',')
-    csvFile.write('\n')
-    csvFile.write('nextline' + ',' + 'next entry')
+    csvFile = open( PATH_output,'w' )
+    csvFile.write( 'Healthy' + ',' )
+    csvFile.write( '\n' )
+    csvFile.write( 'nextline' + ',' + 'next entry' )
     csvFile.close()
 
 if __name__ == '__main__':
     try:
-        #getToWorkAnaDotCom()
-        #getToWorkAnaDotComQuery()
-        writeToCsv()
+        getToWorkAnaDotCom()
+        getToWorkAnaDotComQuery()
+        # writeToCsv()
     except KeyboardInterrupt:
         driver.close()
