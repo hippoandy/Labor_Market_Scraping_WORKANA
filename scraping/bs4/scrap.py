@@ -16,7 +16,7 @@ experience_class = 'hidden-xs'
 skill_element = 'a'             # the element containing skills
 skill_class = 'skill'
 
-result_file = './result.csv'
+result_file = '../result.csv'
 
 # csv header
 header = 'name,country,rating,is_pro,hourly_rate,completed_jobs,hours_worked,skills'
