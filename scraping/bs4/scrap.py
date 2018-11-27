@@ -16,13 +16,13 @@ experience_class = 'hidden-xs'
 skill_element = 'a'             # the element containing skills
 skill_class = 'skill'
 
-result_file = '../result.csv'
+result_file = './result.csv'
 
 # csv header
 header = 'name,country,rating,is_pro,hourly_rate,completed_jobs,hours_worked,skills'
 # the website url
 base_url = 'https://www.workana.com/en/freelancers?page='
-# a very large number
+# a large number to cover all the page number
 limit = 100
 # ------------------------------------------------------- parameters
 
@@ -32,6 +32,9 @@ def invalid_val(): return 'N/A'
 def clear_str( text ):
     text = str(text).replace( '\n', '' ).replace( '\r', '' ).replace( '\t', '' )
     return text
+# replace ',' in the value
+def clear_comma( text ):
+    return str(text).replace( ',', '-' )
 # make sure the value is numeric, otherwise return invalid_val()
 def numeric( val, type='float' ):
     val = str(val) # make sure it is not 'NoneType'
@@ -45,8 +48,7 @@ def numeric( val, type='float' ):
 
 # file output
 f = open( result_file, 'w' )
-f.write( header )
-f.write( '\n' )
+f.write( header + '\n' )
 
 # there are pages to show the result
 for i in range( 1, (limit + 1) ):
@@ -62,13 +64,13 @@ for i in range( 1, (limit + 1) ):
     if( len( t ) == 0 ): break
 
     for workers in t:
-        row = ''
         soup = BeautifulSoup( str(workers), 'html.parser' )
 
         # get the name of the applicant
+        name = ''
         for e in soup.find_all( 'span' ):
             if( e.parent.name == 'a' and e.parent.parent.name == 'h3' ):
-                row += clear_str( e.text ) + ','
+                name = clear_str( e.text )
                 continue # only one element will contain this information
 
         # get the nationality of the applicant
@@ -76,49 +78,48 @@ for i in range( 1, (limit + 1) ):
         # temporary soup parser
         t_soup = BeautifulSoup( str(e), 'html.parser' )
         e = t_soup.find( 'a' )
-        row += clear_str( e.text ) + ','
+        country = clear_str( e.text )
 
         # rating
         e = soup.find( rating_element, class_=rating_class )
         res =  str(e[ 'title' ]).replace( ' of 5.00', '' )
         res = clear_str( res )
         res = float(res)
-        row += clear_str( res ) + ','
+        rating = clear_str( res )
 
         # if this applicant is tagged as 'pro'
         e = soup.find( pro_element, class_=pro_class )
-        if( e == None ): row += str(0) + ','
-        else: row += str(1) + ','
+        is_pro = 0
+        if( e != None ): is_pro = 1
 
         # find hourly rate
         e = soup.find( hrrate_element, class_=hrrate_class )
-        if( e == None ): row += invalid_val() + ','
-        else: row += numeric( e[ 'data-amount' ], type='float' ) + ','
+        hourly_rate = invalid_val()
+        if( e != None ): hourly_rate = numeric( e[ 'data-amount' ], type='float' )
 
         # get the completed_jobs & hours_worked
         e = soup.find( experience_element, class_=experience_class )
         # temporary soup parser
         t_soup = BeautifulSoup( str(e), 'html.parser' )
+        projects = hours = invalid_val()
         for e in t_soup.find_all( 'span' ):
             res = ''
             try:  # make sure the soup find the element
                 # remove the text heading
-                res = str(e.text).replace( 'Completed projects: ', '' ).replace( 'Hours worked in hourly projects: ', '' )
-                res = numeric( res, type='int' )
-            except: res = invalid_val()
-            row += res + ','
+
+                if( 'Completed' in e.text ): projects = numeric( str(e.text).replace( 'Completed projects: ', '' ), type='int' )
+                else: hours = numeric( str(e.text).replace( 'Hours worked in hourly projects: ', '' ), type='int' )
+            except: pass
 
         # get all the skills the applicant has
         skills = []
         e = soup.find_all( skill_element, class_=skill_class )
         for s in e:
-            res = str(s.text).replace( ',', '' )
+            res = clear_comma( s.text )
             skills.append( res )
         skills = "|".join( skills )
-        row += skills
 
         # commit the result
-        f.write( str(row.encode( 'utf-8' )) )
-        f.write( '\n' )
+        f.write( '{},{},{},{},{},{},{},{}\n'.format( name, country, rating, is_pro, hourly_rate, projects, hours, skills ) )
 # safely close the file
 f.close()
