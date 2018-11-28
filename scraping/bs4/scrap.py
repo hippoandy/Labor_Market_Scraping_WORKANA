@@ -115,7 +115,7 @@ for i in range( 1, (limit + 1) ):
         skills = []
         e = soup.find_all( skill_element, class_=skill_class )
         for s in e:
-            res = clear_comma( s.text )
+            res = clear_comma( str(s.text).encode( 'ascii', 'ignore' ) )
             skills.append( res )
         skills = "|".join( skills )
 
