@@ -72,12 +72,15 @@ def scrap():
         res = driver.find_elements_by_css_selector( '#workers > div.js-worker' )
     except: return # the page is empty
     for e in res:
+        # get the name of the applicant
         name = e.find_element_by_css_selector( 'div.row > div.col-sm-7 > div.row > div.worker-details > h3 > a' ).text
         name = clear_comma( clear_str( name ) )
 
+        # get the nationality information
         country = e.find_element_by_css_selector( 'div.row > div.col-sm-7 > div.row > div.worker-details > div.row > div > span.country > span > a' ).text
         country = clear_comma( clear_str( country ) )
 
+        # if a applicant is tagged as 'Pro'
         is_pro = 0
         try:
             e.find_element_by_css_selector( 'div.row > div.col-sm-7 > div.row > div.worker-details > h3 > span.pro-label' )
@@ -85,6 +88,7 @@ def scrap():
         except: pass
         is_pro = str(is_pro)
 
+        # the applicant rating
         rating = e.find_element_by_css_selector( 'div.row > div.col-sm-7 > div.row > div.worker-details > label > span.profile-stars > span.stars-bg' ).get_attribute( 'title' )
         rating = str(rating).replace( ' of 5.00', '' )
         rating = str(numeric( clear_comma( rating ) ))
@@ -99,6 +103,7 @@ def scrap():
             collection.append( clear_comma( s.text ) )
         skills = '|'.join( collection )
 
+        # hourly rate information
         hourly_rate = 'N/A'
         try:
             hourly_rate = e.find_element_by_css_selector( 'div.row > div.col-sm-5 > div.row > div.worker-details > h4 > span > span' )
@@ -116,6 +121,7 @@ def scrap():
             c += 1
             if( c == 2 ): break
 
+        # commit the result
         f.write( '{},{},{},{},{},{},{},{}\n'.format( name, country, rating, is_pro, hourly_rate, projects, hours, skills ) )
 
 if __name__ == '__main__':
