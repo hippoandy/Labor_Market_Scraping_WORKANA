@@ -65,24 +65,7 @@ Wait until the progress complete.
 
 ### Step 3. Download additional Lib. file and the Program
 
-#### 1\. Download Chrome Driver
-
-Please refer to this link:
-[https://chromedriver.storage.googleapis.com/index.html?path=2.42/](https://chromedriver.storage.googleapis.com/index.html?path=2.42/)
-
-Download Windows version Chrome Driver as:
-![Download driver](./images/download-driver.png)
-
-Open the downloaded **.zip** file and extract the "**chromedriver.exe**" to your **Downloads** folder
-
-![Extract driver step 1](./images/extract-driver-step1.png)
-
-You will see a window shows up, change the pathe to your **Download** folder and click "**Extract**"
-
-![Extract driver step 2](./images/extract-driver-step2.png)
-
-
-#### 2\. Download the program files:
+#### Download the program files:
 
 Please refer to this link:
 [https://github.com/hippoandy/UN_Webscraping_WORKANA/](https://github.com/hippoandy/UN_Webscraping_WORKANA/)
@@ -129,25 +112,6 @@ Please use the run button to execute the notebook.
 
 
 #### 2\. Run the Notebook
-
-Before execution, please find the driver section of the code, the section starts with the line:
-> \#\#\# load the chrome driver executable
-
-Replace the **<user>** tag to your computer user name:
-![Driver path](./images/run-program-insert-path.png)
-
-To find your user name, you may check the properties information of the **chromedriver.exe** file.
-
-Headed to your Downloads folder, right click on the **chromedriver.exe** and choose "**Properties**".
-![Find driver path step 1](./images/run-program-find-driver-path.png)
-
-You will see a window like this, the location field indicated the user name:
-![Find driver path step 2](./images/run-program-get-driver-path.png)
-
-Here, the user name is "**Andy**".
-
-Please go back to the Jupyter notebook and replace the user name with yours.
-
 
 If you see this window while running the program, please click "**Allow**".
 ![Security Prompt](./images/run-program-security.png)
