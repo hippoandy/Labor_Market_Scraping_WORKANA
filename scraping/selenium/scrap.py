@@ -14,5 +14,5 @@ PATH_output = './result.csv'
 # time to wait for the page to refresh
 TIME_pending = 2
 
-
 header = ''
+
