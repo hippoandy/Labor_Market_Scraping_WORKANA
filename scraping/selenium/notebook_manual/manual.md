@@ -1,4 +1,11 @@
-# Instruction Manual
+# Anaconda Installation and Scraping Demo Manual
+
+This document demonstrates the process to install Anaconda along with the execution of the web scraping program. This manual is designed for MS Windows users.
+
+The program for web scraping demo is available at:  [https://github.com/hippoandy/UN_Webscraping_WORKANA](https://github.com/hippoandy/UN_Webscraping_WORKANA)
+Under the folder path:
+> scraping \> selenium \> WORKANA\_Freelancers\_Scraping\_using\_Selenium.ipynb
+
 
 ### Step 1. Install Anaconda
 
