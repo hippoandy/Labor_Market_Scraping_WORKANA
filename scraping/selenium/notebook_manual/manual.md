@@ -8,6 +8,7 @@ Please refer to this link for download:
 [https://www.anaconda.com/download/](https://www.anaconda.com/download/)
 
 Scroll down the page a little bit to find the following section:
+
 ![Download Page](./images/download.png)
 
 Please download the ***Python 3.7 version*** of Anaconda
@@ -16,6 +17,7 @@ Then please install Anaconda using the downloaded executable.
 
 #### Windows User
 Please execute the installer and keep click on '***Next***' without changing any settings until you see this page:
+
 ![Windows Step](./images/win-install-step.png)
 
 Make sure you check the option "**Add Anaconda to my PATH environment variable**" before you click "***Install***".
@@ -32,7 +34,7 @@ We are now installing the required Python libraries to allow the program to exec
 On the Windows taskbar, find a circle icon and click it
 ![CMD Step 0](./images/open-cmd-step0.png)
 
-You will see a input field at the button, type "**cmd**"
+You will see an input field at the button, type "**cmd**"
 ![CMD Step 1](./images/open-cmd-step1.png)
 
 The cmd program will show up in the window.
@@ -57,13 +59,13 @@ Copy & paste this line to the CMD window and press "Enter" key.
 
 ![Install lib. 1](./images/install-lib-step1.png)
 
-Then, you will see a message like the following, type '**y**' and press "Enter" key.
+Please wait for a couple of minutes. Then, you will see a message like the following, type '**y**' and press "Enter" key.
 
 ![Install lib. 2](./images/install-lib-step2.png)
 
 Wait until the progress complete.
 
-### Step 3. Download additional Lib. file and the Program
+### Step 3. Download the Program Files
 
 #### Download the program files:
 
@@ -89,16 +91,16 @@ Open you installed Anaconda Program, you should see a window like this:
 
 To launch the Jupyter Notebook, click the "**Launch**" button of it.
 
-Then, you should see you browser opens up and shows a page like this:
+Then, you should see your browser opens up and shows a page like this:
 ![The Jupyter](./images/jupyter.png)
 
 Navigate to your Download folder, and you should see this:
 ![Run notebool step 1](./images/run-program-step1.png)
 
 Here you will see the downloaded files instructed in the previous section.
-Continue to naviagate to the program folder:
+Continue to navigate to the program folder:
 
-> UN\_Webscrpaing\_WORKANA-master > scrpaing > selenium
+> UN\_Webscrpaing\_WORKANA-master > scraping > selenium
 
 Then, you should see this page:
 ![Run notebool step 2](./images/run-program-step2.png)
