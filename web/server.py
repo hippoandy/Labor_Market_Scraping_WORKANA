@@ -13,6 +13,7 @@ import scipy
 # ref. https://github.com/palantir/python-language-server/issues/217
 import matplotlib
 matplotlib.use('TkAgg')
+matplotlib.style.use( 'seaborn' )
 import matplotlib.pyplot as plt
 
 app = Flask(__name__)
