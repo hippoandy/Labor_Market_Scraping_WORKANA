@@ -10,6 +10,9 @@ I used matplotlib along with numpy and pandas to create analytic results and vis
 
 The code of the webpage could be found under **web** folder.
 
+### Screenshot
+![Webpage](https://github.com/hippoandy/UN_Webscraping_WORKANA/blob/master/web/screenshot.png)
+
 I also implemented web scrapers using **BeautifulSoup4** and **Selenium**. The target website is: [https://www.workana.com/en/freelancers](https://www.workana.com/en/freelancers)
 
 The scraper using BeautifulSoup4 is available under **scrap/bs4**.
