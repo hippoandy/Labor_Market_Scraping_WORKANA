@@ -8,13 +8,12 @@ function donut_label()
   //   .domain(["Lorem ipsum", "dolor sit", "amet", "consectetur", "adipisicing", "elit", "sed", "do", "eiusmod", "tempor", "incididunt"])
   //   .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
   var color = d3.scale.category20c();
-  // var color = d3.scale.linear()
-  //       .domain([1, max])
-  //       .range(['#6EACFF', '#1F549B']);
+
   // var color = d3.scale.linear()
   //   .domain([1, max])
-  //   .interpolate(d3.interpolateHcl)
-  //   .range([d3.rgb("#6EACFF"), d3.rgb('#184F97')]);
+  //   .range(['#fff', '#0A428A'])
+  //   .interpolate( d3.interpolateHcl ); //interpolateHsl interpolateHcl interpolateRgb
+
   var data = [];
 
   var width = 960,

@@ -12,7 +12,12 @@ function latin()
       center = [-74, -15];
 
   // define color scale
-  var color = d3.scale.category20c();
+  //var color = d3.scale.category20c();
+  var color = d3.scale.linear()
+        .domain([1, width])
+        .range(['#fff', '#0A428A'])
+        .interpolate( d3.interpolateHcl ); //interpolateHsl interpolateHcl interpolateRgb
+  
   // projection settings
   var projection = d3.geo.mercator()
     .scale( scale )
