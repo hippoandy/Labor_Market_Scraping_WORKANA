@@ -36,6 +36,7 @@ def is_numeric( x ):
     if( str(x).isnumeric() ): return True
     else: return False
 
+# index page
 @app.route('/')
 def homePage():
     global df
@@ -90,6 +91,7 @@ def homePage():
         )
     except Exception as e: return str(e)
 
+# about page
 @app.route('/about')
 def aboutPage():
     title = "About this site"
@@ -99,6 +101,9 @@ def aboutPage():
 
     return render_template("index.html", title=title, paragraph=paragraph, pageType=pageType)
 
+
+### data APIs --------------------------------------------------
+# hourly rate by country
 @app.route( '/_country_hr_dist' )
 def countryDetail():
     global df
@@ -123,6 +128,7 @@ def countryDetail():
 
     return jsonify( result )
 
+# hourly rate with skills by country
 @app.route( '/_country_hr_skills' )
 def countryHRSkills():
     global df
@@ -201,7 +207,8 @@ def HRvsPC():
     figfile.seek(0)
 
     return Response(figfile.getvalue(), mimetype='image/png')
+### -------------------------------------------------- data APIs
 
-
+# the main function
 if __name__ == "__main__":
 	app.run(debug = True, host='0.0.0.0', port=8080, passthrough_errors=True)

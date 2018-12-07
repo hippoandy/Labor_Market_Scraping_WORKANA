@@ -127,6 +127,7 @@ def scrap():
         # commit the result
         f.write( '{},{},{},{},{},{},{},{}\n'.format( name, country, rating, is_pro, hourly_rate, projects, hours, skills ) )
 
+# the main function
 if __name__ == '__main__':
     try:
         # open the webpage
