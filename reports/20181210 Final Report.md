@@ -2,10 +2,13 @@
 # UN Web Scraping Final Report
 ## Andy Ho, Student ID: 915528994
 
-In this quarter, I learned to use **Jupyter** Notebook for fast and interactive data visualizations based on the dataset created by the web scraping team. I also tried to demonstrate the data analysis result using **D3.js** with a web-based application implemented by **Python-Flask**, a light-weight backend server, and pure *JavaScript* with **HTML5** and **LESS**.
+In this quarter, I learned to use **Jupyter** Notebook for fast and interactive data visualizations based on the dataset created by the web scraping team. I demonstrated the data analysis result using **D3.js** with a web-based application implemented by **Python-Flask**, a light-weight Python backend server, and pure *JavaScript* with **HTML5** and **LESS**.
 
-The screenshot of the web application is as follows:
-![Screenshot of the web application](./images/screenshot-webapp.png)
+The screenshot of the web-based visualization is as follows:
+![Screenshot of the web-based visualization](./images/screenshot-webapp.png)
+
+The ReadMe file for the web-based visualization is available at:
+[https://github.com/hippoandy/UN_Webscraping_WORKANA/blob/master/web/README.pdf](https://github.com/hippoandy/UN_Webscraping_WORKANA/blob/master/web/README.pdf)
 
 I also learned to perform web scraping using **BeautifulSoup4** and **Selenium** library. Both of the scraping application is available in pure Python program version or a Jupyter version. I created a user manual for user to understand how to install the required program environment and how to execute my program using Selenium.
 
