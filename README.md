@@ -1,4 +1,4 @@
-# UN_Webscraping_WORKANA
+# UN Webscraping and Visualization of WORKANA.com
 
 This is the project aims to find information of job market among Latin America and Caribbean countries.
 
