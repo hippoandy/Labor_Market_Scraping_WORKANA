@@ -15,15 +15,21 @@ The application is embedded in a backend server application written in **Python-
 2\. Install required Python libraries:
 ### Windows User:
 Make sure **Python is in your environment variables**, then use the **Command Prompt (CMD)** application with **Administrator Permission** to run the following command (without the '$' sign):
-> $ pip3 install flask pandas numpy seaborn scipy matplotlib
+```bash
+$ pip3 install flask pandas numpy seaborn scipy matplotlib
+```
 
 ### macOS User:
 Make sure **Python 3.7 or above is installed**, then use the **Terminal** application to run the following command (without the '$' sign):
-> $ pip3 install flask pandas numpy seaborn scipy matplotlib
+```bash
+$ pip3 install flask pandas numpy seaborn scipy matplotlib
+```
 
 3\. Start-up the application:
 Run the following command to execute the web application:
-> $ python3 ./server.py
+```bash
+$ python3 ./server.py
+```
 
 4\. Open up a browser to see the result:
 Open a browser and input the following URL to it for showing the result:
