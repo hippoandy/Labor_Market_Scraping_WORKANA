@@ -33,7 +33,7 @@ $ python3 ./server.py
 
 4\. Open up a browser to see the result:
 Open a browser and input the following URL to it for showing the result:
-> http:127.0.0.1:8080
+> [http:127.0.0.1:8080](http:127.0.0.1:8080)
 
 ## Screenshot
 
