@@ -1,4 +1,4 @@
-# UN Webscraping and Visualization of Job Market Websites
+# Webscraping and Visualization of Job Market Websites
 
 This is the project aims to find information of job market among Latin America and Caribbean countries.
 
