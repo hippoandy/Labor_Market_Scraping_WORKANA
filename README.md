@@ -1,6 +1,6 @@
 # Webscraping and Visualization of Job Market Websites
 
-## Target website: [WORKANA](https://www.workana.com/en)
+### Target website: [WORKANA](https://www.workana.com/en)
 
 This is the project aims to find information of job market among Latin America and Caribbean countries.
 
