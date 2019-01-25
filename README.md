@@ -1,5 +1,7 @@
 # Webscraping and Visualization of Job Market Websites
 
+## Target website: [WORKANA](https://www.workana.com/en)
+
 This is the project aims to find information of job market among Latin America and Caribbean countries.
 
 This work is done through my participation in the **C^2 lab** at the University of California, Davis, headed by **Prof. Martin Hilbert**.
