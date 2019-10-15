@@ -1,5 +1,7 @@
 // reference: https://bl.ocks.org/john-guerra/43c7656821069d00dcbc
 
+var req_url = "{{ url_for( 'frontend.countryHRSkills' ) }}";
+
 function latin()
 { // default settings
   var $el = d3.select("body");
@@ -176,7 +178,8 @@ function latin()
         // get hourly rate distribution for each selected country
         $(function()
         {
-          $.getJSON( '/_country_hr_dist',
+          // $.getJSON( '/_country_hr_dist',
+          $.getJSON( req_url,
           // $.getJSON( "{{ url_for( 'frontend.countryHRSkills' ) }}",
             { country: d.properties.name },
             function( data )
