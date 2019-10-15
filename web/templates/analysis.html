@@ -118,7 +118,7 @@ $(document).ready(function()
   // build the map
   latin()
     .$el( d3.select("#map") )
-    .data( "{{ url_for('static', filename='map/latin-america.geo.json') }}" )
+    .data( "{{ url_for('frontend.static', filename='map/latin-america.geo.json') }}" )
     .scale( 300 )
     .center( [-74, -15] ) // center latin america view
     .width( 800 )

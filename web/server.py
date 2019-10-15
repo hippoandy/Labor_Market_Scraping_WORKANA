@@ -19,9 +19,9 @@ import matplotlib.pyplot as plt
 app = Flask(__name__)
 
 bp = Blueprint( 'frontend', __name__,
-                static_folder='web/static',
-                template_folder='web/templates',
-                url_prefix='/simpleapidemo' )
+                static_folder='static',
+                template_folder='templates',
+                url_prefix='/labormarketvis' )
 
 # parameters ------------------------------
 hr_range = 10
@@ -99,13 +99,12 @@ def homePage():
 
 # about page
 @bp.route('/about')
+@bp.route('/about.html')
 def aboutPage():
     title = "About this site"
     paragraph = "UN Webscraping"
 
-    pageType = 'about'
-
-    return render_template("index.html", title=title, paragraph=paragraph, pageType=pageType)
+    return render_template("index.html", title=title, paragraph=paragraph, pageType='about')
 
 
 ### data APIs --------------------------------------------------
