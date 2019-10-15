@@ -1,7 +1,5 @@
 // reference: https://bl.ocks.org/john-guerra/43c7656821069d00dcbc
 
-var req_url = "{{ url_for( 'frontend.countryHRSkills' ) }}";
-
 function latin()
 { // default settings
   var $el = d3.select("body");
@@ -179,7 +177,8 @@ function latin()
         $(function()
         {
           // $.getJSON( '/_country_hr_dist',
-          $.getJSON( req_url,
+          // varable in analysis.html!
+          $.getJSON( api_countryHRSkills,
           // $.getJSON( "{{ url_for( 'frontend.countryHRSkills' ) }}",
             { country: d.properties.name },
             function( data )

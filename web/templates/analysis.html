@@ -95,6 +95,8 @@ var metadata;
 // build the charts
 $(document).ready(function()
 {
+  // global variables
+  var api_countryHRSkills = "{{ url_for( 'frontend.countryHRSkills' ) }}";
   // $.ajax({
   //   method: 'GET',
   //   async: true,
@@ -185,7 +187,7 @@ function build_wc_section( option )
   // build the word cloud
   $(function()
   {
-    $.getJSON( "{{ url_for( 'frontend.countryHRSkills' ) }}", { 'option': option },
+    $.getJSON( api_countryHRSkills, { 'option': option },
       function( data )
       {
         var p = document.getElementById( 'skills-grid' );
