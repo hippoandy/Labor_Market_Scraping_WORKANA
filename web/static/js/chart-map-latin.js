@@ -176,7 +176,8 @@ function latin()
         // get hourly rate distribution for each selected country
         $(function()
         {
-          $.getJSON( "{{ url_for( 'frontend.countryHRSkills' ) }}",
+          $.getJSON( '/_country_hr_dist',
+          // $.getJSON( "{{ url_for( 'frontend.countryHRSkills' ) }}",
             { country: d.properties.name },
             function( data )
             {
