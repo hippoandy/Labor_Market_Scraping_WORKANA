@@ -4,7 +4,7 @@
 <meta name="viewport" content = "width=device-width, initial-scale=1.0">
 
 <!-- favicon -->
-<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+<link rel="shortcut icon" href="{{ url_for('frontend.static', filename='img/favicon.png') }}">
 
 <!-- bootstrap lib. -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -17,22 +17,22 @@
 <!-- d3.js lib. -->
 <script src="http://d3js.org/d3.v3.min.js"></script>
 
-<link rel="stylesheet/less" type="text/css" href="{{ url_for('static', filename='css/main.less') }}" />
-<link rel="stylesheet/less" type="text/css" href="{{ url_for('static', filename='css/d3-tip.less') }}" />
+<link rel="stylesheet/less" type="text/css" href="{{ url_for('frontend.static', filename='css/main.less') }}" />
+<link rel="stylesheet/less" type="text/css" href="{{ url_for('frontend.static', filename='css/d3-tip.less') }}" />
 
 <!-- less stylesheet lib. -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.7.1/less.min.js" ></script>
 
 <!-- chart drawing -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js" ></script>
-<script src="{{ url_for('static', filename='js/chart-donut.js') }}" ></script>
-<script src="{{ url_for('static', filename='js/chart-donut-label.js') }}" ></script>
-<script src="{{ url_for('static', filename='js/chart-h-bar.js') }}" ></script>
-<script src="{{ url_for('static', filename='js/chart-wordcloud.js') }}" ></script>
-<script src="{{ url_for('static', filename='js/draw-wordcloud.js') }}" ></script>
+<script src="{{ url_for('frontend.static', filename='js/chart-donut.js') }}" ></script>
+<script src="{{ url_for('frontend.static', filename='js/chart-donut-label.js') }}" ></script>
+<script src="{{ url_for('frontend.static', filename='js/chart-h-bar.js') }}" ></script>
+<script src="{{ url_for('frontend.static', filename='js/chart-wordcloud.js') }}" ></script>
+<script src="{{ url_for('frontend.static', filename='js/draw-wordcloud.js') }}" ></script>
 
 <!-- map drawing -->
-<script src="{{ url_for('static', filename='js/chart-map-latin.js') }}" ></script>
+<script src="{{ url_for('frontend.static', filename='js/chart-map-latin.js') }}" ></script>
 
 <title>{{ title }}</title>
 </head>
