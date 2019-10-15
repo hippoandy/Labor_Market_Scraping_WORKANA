@@ -82,7 +82,7 @@
     <h5>Correlation between Hourly Rate and (Project Completed/Hourly Worked)</h5>
     <hr />
     <div id='figure-container'>
-      <img src="/_hr_v_pc" width="500">
+      <img src="{{ url_for( 'server._hr_v_pc' ) }}" width="500">
       <!-- <img src="/_hr_v_hw" width="500"> -->
     </div>
   </div>
@@ -131,7 +131,8 @@ $(document).ready(function()
 function build_pychart()
 {
   var parent = document.getElementById( 'figure-container' );
-  var api = [ "/_hr_vs_pc", "/_hr_vs_hw" ];
+  // var api = [ "/_hr_vs_pc", "/_hr_vs_hw" ];
+  var api = [ "{{ url_for( 'server._hr_vs_pc' ) }}", "{{ url_for( 'server._hr_vs_hw' ) }}" ]
   for( var i = 0 ; i < api.length ; i++ )
   {
     var img = document.createElement( 'img' );
@@ -184,7 +185,7 @@ function build_wc_section( option )
   // build the word cloud
   $(function()
   {
-    $.getJSON( '/_country_hr_skills', { 'option': option },
+    $.getJSON( "{{ url_for( 'server._country_hr_skills' ) }}", { 'option': option },
       function( data )
       {
         var p = document.getElementById( 'skills-grid' );
