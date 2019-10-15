@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, Response
+from flask import Flask, jsonify, render_template, request, Response, Blueprint
 
 import base64
 import json
@@ -17,6 +17,11 @@ matplotlib.style.use( 'seaborn' )
 import matplotlib.pyplot as plt
 
 app = Flask(__name__)
+
+bp = Blueprint( 'frontend', __name__,
+                static_folder='web/static',
+                template_folder='web/templates',
+                url_prefix='/simpleapidemo' )
 
 # parameters ------------------------------
 hr_range = 10
@@ -38,7 +43,7 @@ def is_numeric( x ):
     else: return False
 
 # index page
-@app.route('/')
+@bp.route('/')
 def homePage():
     global df
 
@@ -93,7 +98,7 @@ def homePage():
     except Exception as e: return str(e)
 
 # about page
-@app.route('/about')
+@bp.route('/about')
 def aboutPage():
     title = "About this site"
     paragraph = "UN Webscraping"
@@ -105,7 +110,7 @@ def aboutPage():
 
 ### data APIs --------------------------------------------------
 # hourly rate by country
-@app.route( '/_country_hr_dist' )
+@bp.route( '/_country_hr_dist' )
 def countryDetail():
     global df
     nation_df = df[(df['country'] == request.args.get('country', '', type=str))]
@@ -130,7 +135,7 @@ def countryDetail():
     return jsonify( result )
 
 # hourly rate with skills by country
-@app.route( '/_country_hr_skills' )
+@bp.route( '/_country_hr_skills' )
 def countryHRSkills():
     global df
     global metadata
@@ -174,7 +179,7 @@ def countryHRSkills():
 # flask render
 # ref: https://stackoverflow.com/questions/50728328/python-how-to-show-matplotlib-in-flask
 # ref: http://hplgit.github.io/web4sciapps/doc/pub/._web4sa_flask013.html
-@app.route( '/_hr_v_pc' )
+@bp.route( '/_hr_v_pc' )
 def HRvsPC():
 # def create_plot():
 
@@ -210,6 +215,12 @@ def HRvsPC():
     return Response(figfile.getvalue(), mimetype='image/png')
 ### -------------------------------------------------- data APIs
 
+app.register_blueprint( bp )
+
 # the main function
 if __name__ == "__main__":
-	app.run(debug = True, host='0.0.0.0', port=8080, passthrough_errors=True)
+	app.run(
+        debug=False,
+        host='0.0.0.0',
+        port=8804,
+        passthrough_errors=True )
