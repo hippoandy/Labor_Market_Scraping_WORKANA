@@ -157,7 +157,6 @@ def countryHRSkills():
             nation_df = df[(df['country'] == k) & (df['hourly_rate'] > metadata[ "country_avg" ][ k ])]
         else:
             tmp = opt.split( '-' )
-            print( tmp )
             nation_df = df[(df['country'] == k) & (df['hourly_rate'] >= int(tmp[0])) & (df['hourly_rate'] < int(tmp[1]))]
 
         count[ k ] = len(nation_df)
